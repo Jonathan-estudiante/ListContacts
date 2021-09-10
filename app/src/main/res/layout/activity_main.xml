@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <ListView
+
+        android:id="@+id/listView"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+
+    </ListView>
+
+    <TextView
+
+        android:id="@+id/textViewNoItems"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_centerInParent="true"
+
+        android:visibility="gone"
+
+        android:text="@string/activity_list_contact_no_items" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nuevo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nuevo"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/azul_claro"/>
+
+
+</RelativeLayout>
