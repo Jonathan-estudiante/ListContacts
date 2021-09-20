@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SaveContact">
+    tools:context=".UpdateContact">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -24,12 +24,12 @@
             android:layout_marginTop="90dp">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/text2"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/contacto_nuevo"
+                android:text="@string/editar_contacto"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
                 android:gravity="start">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtNameUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -59,7 +59,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtNumber"
+                    android:id="@+id/txtNumberUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -70,7 +70,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtCity"
+                    android:id="@+id/txtCityUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -81,7 +81,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtDescription"
+                    android:id="@+id/txtDescriptionUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -92,7 +92,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtPhoto"
+                    android:id="@+id/txtPhotoUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -110,7 +110,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/editName"
+                    android:id="@+id/editNameUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -120,7 +120,7 @@
                     android:textSize="16sp"/>
 
                 <EditText
-                    android:id="@+id/editNumber"
+                    android:id="@+id/editNumberUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -130,7 +130,7 @@
                     android:textSize="16sp"/>
 
                 <EditText
-                    android:id="@+id/editCity"
+                    android:id="@+id/editCityUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -140,7 +140,7 @@
                     android:textSize="16sp"/>
 
                 <EditText
-                    android:id="@+id/editDescription"
+                    android:id="@+id/editDescriptionUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -150,7 +150,7 @@
                     android:textSize="16sp"/>
 
                 <EditText
-                    android:id="@+id/editPhoto"
+                    android:id="@+id/editPhotoUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -168,17 +168,17 @@
             android:padding="20dp">
 
             <Button
-                android:id="@+id/btnSave"
+                android:id="@+id/btnSaveUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/newcontact"
                 android:layout_weight="1"
-                app:backgroundTint="@color/azul_claro"
-                android:text="@string/guardar"
+                app:backgroundTint="#AED6F1"
+                android:text="@string/editar"
                 android:layout_marginEnd="10dp" />
 
             <Button
-                android:id="@+id/btnCancel"
+                android:id="@+id/btnCancelUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/cancelbutton"
@@ -188,4 +188,5 @@
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

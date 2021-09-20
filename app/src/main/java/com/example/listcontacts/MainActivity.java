@@ -1,33 +1,58 @@
 package com.example.listcontacts;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
+import android.view.ContextMenu;
 import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.listcontacts.database.Contact;
+import com.example.listcontacts.database.ContactDAO;
+import com.example.listcontacts.database.ContactDataBase;
+import com.example.listcontacts.database.ContactLab;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnCreateContextMenuListener{
 
     private ListView list;
+
     private ImageView img;
     private FloatingActionButton BtnNuevo;
-//    private String[] nombres = {"Luis", "Juan", "Pedro"};
+
+    private ContactLab contactLab;
+    private ContactAdapter listItemAdapter;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    private ArrayList<Contact> listaContactos =new ArrayList<Contact>();
+    ArrayAdapter<Contact> personaArrayAdapter;
+    ContactAdapter adapter;
+    Contact selectItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +62,22 @@ public class MainActivity extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.listView);
         BtnNuevo = findViewById(R.id.nuevo);
-        devolverArray();
+        inicializarFirebase();
+        listarDatos();
+
+
 //        ArrayAdapter<String> adapter;
 //        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nombres);
+//        list.setAdapter(adapter);   Save
+//        ArrayList<Contact> listContact = new ArrayList<Contact>();
+//        llenarDatosBD(listContact);
+//
+//        ContactAdapter adapter = new ContactAdapter(this, listContact);
 //        list.setAdapter(adapter);
-        ArrayList<Contact> listContact = new ArrayList<Contact>();
-        llenarDatos(listContact);
-
-        ContactAdapter adapter = new ContactAdapter(this, listContact);
-        list.setAdapter(adapter);
+//
+//        getContactos();
+//        listItemAdapter=new ContactAdapter(this,listaNombres);
+//        list.setAdapter(listItemAdapter);
 
         BtnNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("nombre", selectItem.getNombre());
                 intent.putExtra("ciudad", selectItem.getCiudad());
                 intent.putExtra("descripcion", selectItem.getDescripcion());
-                intent.putExtra("foto", selectItem.getFoto()+"");
+                intent.putExtra("foto", selectItem.getFoto());
                 intent.putExtra("numero", selectItem.getNumero());
                 startActivity(intent);
 
@@ -77,7 +109,71 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void llenarDatos(ArrayList<Contact> list){
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        getMenuInflater().inflate(R.menu.menu_contextual, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()){
+            case R.id.itemEliminar:
+                Contact selectItem2 = (Contact) adapter.getItem(info.position);
+                Contact contact = new Contact();
+                contact.setId(selectItem2.getId());
+                databaseReference.child("Contact").child(contact.getId()).removeValue();
+                listarDatos();
+                break;
+
+            case R.id.itemEditar:
+                selectItem = (Contact) adapter.getItem(info.position);
+                Intent intent = new Intent(MainActivity.this, UpdateContact.class);
+                intent.putExtra("id", selectItem.getId());
+                intent.putExtra("nombre", selectItem.getNombre());
+                intent.putExtra("ciudad", selectItem.getCiudad());
+                intent.putExtra("descripcion", selectItem.getDescripcion());
+                intent.putExtra("foto", selectItem.getFoto());
+                intent.putExtra("numero", selectItem.getNumero());
+                startActivity(intent);
+                break;
+
+            default:break;
+        }
+        return true;
+    }
+
+    private void inicializarFirebase(){
+        FirebaseApp.initializeApp(this);
+        firebaseDatabase = firebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+    }
+
+    private void listarDatos(){
+        databaseReference.child("Contact").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                listaContactos.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Contact contact = dataSnapshot.getValue(Contact.class);
+                    listaContactos.add(contact);
+                    adapter = new ContactAdapter(MainActivity.this, listaContactos);
+                    list.setAdapter(adapter);
+                    registerForContextMenu(list);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void llenarDatosCodigo(ArrayList<Contact> list){
 
         Contact contact1 = new Contact();
         contact1.setNombre("Luis Castro");
@@ -121,28 +217,29 @@ public class MainActivity extends AppCompatActivity {
         list.add(contact5);
 
     }
-    public void devolverArray(){
-//        Scanner scn = new Scanner(System.in);
-//        //crear un método que me devuelva el arreglo de objetos de tipo contact
-//        Contact contacto[] = new Contact[2];
-//        String nombre;
-//        String numero;
-//        for (int i=0; i<contacto.length; i++){
-//            System.out.println("Nuevo contacto");
-//            System.out.println("Ingrese el nombre: ");
-//            nombre = scn.next();
-//            System.out.println("Ingrese el número: ");
-//            numero = scn.next();
-//        }
-//        Contact contacto[] = {new Contact("Juana", "0997746084"),
-//                new Contact("Pepe", "0997746084"),
-//                new Contact("Luisa", "0997746084"),};
+
+//    private void addContactoBD(){
+////
+////        Intent intent = getIntent();
+////        String nombre = intent.getStringExtra("nombre");
+////        String numero = intent.getStringExtra("numero");
+////        String description = intent.getStringExtra("descripcion");
+////        String foto = intent.getStringExtra("foto");
+////        String ciudad = intent.getStringExtra("ciudad");
 //
-//        for(int i = 0;i<contacto.length;i++) {
-//            System.out.println(contacto[i]);
+//        Contact contact = new Contact();
+//        contact.setNombre(txtNombre.getText().toString());
+//        contact.setNumero(txtNumero.getText().toString());
+//        contact.setFoto(txtFoto.getText().toString());
+//        contact.setCiudad(txtCiudad.getText().toString());
+//        contact.setDescripcion(txtDescripcion.getText().toString());
 //
-//        }
-    }
-//    adapter = new ArrayAdapter<String>(this, R.layout.activity_main, R.id.listView, contacto);
-//            list.setAdapter(adapter);
+//        contactLab.addContacto(contact);
+//
+//    }
+//    public void getContactos(){
+//        listaNombres.clear();
+//        listaNombres.addAll(contactLab.getContacts());
+//    }
+
 }

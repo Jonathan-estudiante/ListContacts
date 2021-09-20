@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "788464563579",
+    "project_id": "listacontactos-1fbf2",
+    "storage_bucket": "listacontactos-1fbf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788464563579:android:83dfba09dbff7b4a88f9de",
+        "android_client_info": {
+          "package_name": "com.example.listcontacts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788464563579-is3h1qf9esjc9ei4tukcvftgprrsk5mu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY8GFwO38e-QEvSM97-K-IO8l3tQ7Gph8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788464563579-is3h1qf9esjc9ei4tukcvftgprrsk5mu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -36,13 +36,11 @@ public class DetailContact extends AppCompatActivity {
         String img = intent.getStringExtra("foto");
         String number = intent.getStringExtra("numero");
         System.out.println("Imagen: " + img);
-        System.out.println("Ciudad: " + city);
-
         Name.setText(nombre);
         City.setText(city);
         Description.setText(description);
-        Glide.with(this)
-                .load(img)
+        Glide.with(Image.getContext())
+                .load(Uri.parse(img))
                 .into(Image);
         Number.setText(number);
 

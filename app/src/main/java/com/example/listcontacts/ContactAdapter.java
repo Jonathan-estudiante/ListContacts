@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.listcontacts.database.Contact;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
 

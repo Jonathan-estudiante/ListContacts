@@ -11,4 +11,6 @@
     <string name="foto">Foto</string>
     <string name="guardar">Guardar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="editar">Editar</string>
+    <string name="editar_contacto">Editar Contacto</string>
 </resources>

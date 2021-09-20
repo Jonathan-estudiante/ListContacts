@@ -37,10 +37,10 @@
         android:id="@+id/adapterNextIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_baseline_play_arrow_24"/>
+        android:padding="2dp"
+        android:src="@drawable/ic_baseline_play_arrow_24" />
 
 
 
