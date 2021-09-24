@@ -3,6 +3,8 @@ package com.example.listcontacts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listcontacts.database.Contact;
+import com.example.listcontacts.database.ContactLab;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +34,8 @@ public class SaveContact extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
+    private ContactLab contactLab;
+    private Contact contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,9 @@ public class SaveContact extends AppCompatActivity {
         txtDescripcion = (EditText) findViewById(R.id.editDescription);
         txtFoto = (EditText) findViewById(R.id.editPhoto);
 
-        inicializarFirebase();
+//        inicializarFirebase();
+        contactLab = new ContactLab(this);
+
 
         BtnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,40 +66,44 @@ public class SaveContact extends AppCompatActivity {
         BtnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = txtNombre.getText().toString();
-                String numero = txtNumero.getText().toString();
-                String description = txtDescripcion.getText().toString();
-                String foto = txtFoto.getText().toString();
-                String ciudad = txtCiudad.getText().toString();
+//                //Con firebase
+//                String nombre = txtNombre.getText().toString();
+//                String numero = txtNumero.getText().toString();
+//                String description = txtDescripcion.getText().toString();
+//                String foto = txtFoto.getText().toString();
+//                String ciudad = txtCiudad.getText().toString();
+//
+//                if (nombre.equals("")||numero.equals("")||description.equals("")||foto.equals("")||ciudad.equals("")) {
+//                    validacion();
+//                } else{
+//                    Contact contact = new Contact();
+//                    contact.setId(UUID.randomUUID().toString());
+//                    contact.setNombre(nombre.trim());
+//                    contact.setNumero(numero.trim());
+//                    contact.setCiudad(ciudad.trim());
+//                    contact.setDescripcion(description.trim());
+//                    contact.setFoto(foto.trim());
+//                    databaseReference.child("Contact").child(contact.getId()).setValue(contact);
+//
+//                    Toast toast = Toast.makeText(SaveContact.this, "Registro Agregado", Toast.LENGTH_LONG);
+//                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+//                    toast.show();
+//                    Intent intent1 = new Intent(SaveContact.this, MainActivity.class);
+//                    startActivity(intent1);
+//                    limpiarDatos();
+//                }
+                guardarBd();
+                validacion();
 
-                if (nombre.equals("")||numero.equals("")||description.equals("")||foto.equals("")||ciudad.equals("")) {
-                    validacion();
-                } else{
-                    Contact contact = new Contact();
-                    contact.setId(UUID.randomUUID().toString());
-                    contact.setNombre(nombre.trim());
-                    contact.setNumero(numero.trim());
-                    contact.setCiudad(ciudad.trim());
-                    contact.setDescripcion(description.trim());
-                    contact.setFoto(foto.trim());
-                    databaseReference.child("Contact").child(contact.getId()).setValue(contact);
-
-                    Toast toast = Toast.makeText(SaveContact.this, "Registro Agregado", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                    toast.show();
-                    Intent intent1 = new Intent(SaveContact.this, MainActivity.class);
-                    startActivity(intent1);
-                    limpiarDatos();
-                }
             }
         });
     }
 
-    private void inicializarFirebase(){
-        FirebaseApp.initializeApp(this);
-        firebaseDatabase = firebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }
+//    private void inicializarFirebase(){
+//        FirebaseApp.initializeApp(this);
+//        firebaseDatabase = firebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference();
+//    }
 
     private void limpiarDatos(){
         txtNombre.setText("");
@@ -123,4 +133,34 @@ public class SaveContact extends AppCompatActivity {
         }
     }
 
+    private void guardarBd(){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+        dialogo1.setTitle("Aviso");
+        dialogo1.setMessage("¿Desea agregar este contacto?");
+        dialogo1.setCancelable(false);
+        dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                contact = new Contact();
+                contact.setNombre(txtNombre.getText().toString().trim());
+                contact.setNumero(txtNumero.getText().toString().trim());
+                contact.setCiudad(txtCiudad.getText().toString().trim());
+                contact.setDescripcion(txtDescripcion.getText().toString().trim());
+                contact.setFoto(txtFoto.getText().toString().trim());
+                contactLab.addContacto(contact);
+                Toast toast = Toast.makeText(SaveContact.this, "Registro Agregado", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                limpiarDatos();
+                Intent  intent = new Intent(SaveContact.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+
+            }
+        });
+        dialogo1.show();
+
+    }
 }

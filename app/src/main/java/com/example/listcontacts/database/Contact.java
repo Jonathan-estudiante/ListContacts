@@ -6,28 +6,37 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+@Entity (tableName = "contactos")
 public class Contact {
 
-//    @PrimaryKey(autoGenerate = true)
-//    @NonNull
-    private String id;
+    public int getId() {
+        return id;
+    }
 
-//    @ColumnInfo(name = "nombre")
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private int id;
+
+    @ColumnInfo(name = "nombre")
     private String nombre;
 
-//    @ColumnInfo(name = "numero")
+    @ColumnInfo(name = "numero")
     private String numero;
 
-//    @ColumnInfo(name = "ciudad")
+    @ColumnInfo(name = "ciudad")
     private String ciudad;
 
-//    @ColumnInfo(name = "descripcion")
+    @ColumnInfo(name = "descripcion")
     private String descripcion;
 
-//    @ColumnInfo(name = "foto")
+    @ColumnInfo(name = "foto")
     private String foto;
 
-    public Contact(String id, String nombre, String numero, String ciudad, String descripcion, String foto) {
+    public Contact(int id, String nombre, String numero, String ciudad, String descripcion, String foto) {
         this.id = id;
         this.nombre = nombre;
         this.numero = numero;
@@ -38,13 +47,7 @@ public class Contact {
 
     public Contact() {
     }
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;

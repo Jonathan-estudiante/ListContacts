@@ -63,39 +63,37 @@ public class UpdateContact extends AppCompatActivity {
             }
         });
 
-        BtnActualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nombre = txtNombre.getText().toString();
-                String numero = txtNumero.getText().toString();
-                String description = txtDescripcion.getText().toString();
-                String foto = txtFoto.getText().toString();
-                String ciudad = txtCiudad.getText().toString();
-
-                Toast toast = Toast.makeText(UpdateContact.this, "Click en el botón actualizar: ", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.show();
-
-                if (nombre.equals("")||numero.equals("")||description.equals("")||foto.equals("")||ciudad.equals("")) {
-                    validacion();
-                } else {
-                    Contact contact = new Contact();
-                    contact.setId(id);
-                    contact.setNombre(nombre.trim());
-                    contact.setNumero(numero.trim());
-                    contact.setCiudad(ciudad.trim());
-                    contact.setDescripcion(description.trim());
-                    contact.setFoto(foto.trim());
-                    System.out.println(contact);
-                    databaseReference.child("Contact").child(contact.getId()).setValue(contact);
-                    Intent intent1 = new Intent(UpdateContact.this, MainActivity.class);
-                    startActivity(intent1);
-                    limpiarDatos();
-                }
-            }
-        });
-
-
+//        BtnActualizar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String nombre = txtNombre.getText().toString();
+//                String numero = txtNumero.getText().toString();
+//                String description = txtDescripcion.getText().toString();
+//                String foto = txtFoto.getText().toString();
+//                String ciudad = txtCiudad.getText().toString();
+//
+//                Toast toast = Toast.makeText(UpdateContact.this, "Click en el botón actualizar: ", Toast.LENGTH_LONG);
+//                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+//                toast.show();
+//
+//                if (nombre.equals("")||numero.equals("")||description.equals("")||foto.equals("")||ciudad.equals("")) {
+//                    validacion();
+//                } else {
+//                    Contact contact = new Contact();
+//                    contact.setId(id);
+//                    contact.setNombre(nombre.trim());
+//                    contact.setNumero(numero.trim());
+//                    contact.setCiudad(ciudad.trim());
+//                    contact.setDescripcion(description.trim());
+//                    contact.setFoto(foto.trim());
+//                    System.out.println(contact);
+//                    databaseReference.child("Contact").child(contact.getId()).setValue(contact);
+//                    Intent intent1 = new Intent(UpdateContact.this, MainActivity.class);
+//                    startActivity(intent1);
+//                    limpiarDatos();
+//                }
+//            }
+//        });
     }
 
     private void inicializarFirebase(){

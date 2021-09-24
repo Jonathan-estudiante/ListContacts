@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ListContacts</string>
+    <string name="app_name">Agenda de Contactos</string>
     <string name="activity_list_contact_no_items">No hay contactos</string>
     <string name="activity_detail_contact_description">Descripción</string>
     <string name="activity_detail_contact_city">Ciudad</string>
